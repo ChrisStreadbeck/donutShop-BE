@@ -62,11 +62,34 @@ def add_donut():
     return jsonify("DONUT POSTED!")
 
 
+@app.route("/donut/<id>", methods=["PUT"])
+def update_donut(id):
+    if request.content_type == "application/json":
+       put_data = request.get_json()
+
+       title = put_data.get("title")
+       text = put_data.get("text")
+       image = put_data.get("image")
+       price = put_data.get("price")
+
+       record = db.session.query(Donut).get(id)
+       record.title = title
+       record.text = text 
+       record.image = image
+       record.price = price 
 
 
+       db.session.commit()
+       return jsonify("Update Successful")
+    return jsonify("Check content_type and try again")
 
+@app.route("/donut/<id>", methods=["DELETE"])
+def delete_donut(id):
+    record = db.session.query(Donut).get(id)
+    db.session.delete(record)
+    db.session.commit()
 
-
+    return jsonify("Record DELETED!!") 
 
 
 if __name__ == "__main__":
