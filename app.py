@@ -19,18 +19,20 @@ ma = Marshmallow(app)
 class Donut(db.Model):
     __tablename__ = "donuts"
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(50))
+    title = db.Column(db.String(50))
+    text = db.Column(db.String(255))
     image = db.Column(db.String(500))
     price = db.Column(db.Integer)
     
-    def __init__(self, text, image, price):
+    def __init__(self, title, text, image, price):
+        self.title = title
         self.text = text
         self.image = image
         self.price = price
 
 class DonutSchema(ma.Schema):
     class Meta:
-        fields = ("id", "text", "image", "price")
+        fields = ("id", "title", "text", "image", "price")
 
 donut_schema = DonutSchema()
 donuts_schema = DonutSchema(many=True)
