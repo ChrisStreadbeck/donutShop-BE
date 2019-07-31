@@ -41,6 +41,25 @@ donuts_schema = DonutSchema(many=True)
 def greeting():
     return "<h1>Donut API</h1>"
 
+@app.route("/donuts", methods=["GET"])
+def get_donuts():
+    all_donuts = Donut.query.all()
+    result = donuts_schema.dump(all_donuts)
+    return jsonify(result.data)
+
+@app.route("/add-donut", methods=["POST"])
+def add_donut():
+    title = request.json["title"]
+    text = request.json["text"]
+    image = request.json["image"]
+    price = request.json["price"]
+
+    new_donut = Donut(title, text, image, price)
+
+    db.session.add(new_donut)
+    db.session.commit()
+
+    return jsonify("DONUT POSTED!")
 
 
 
