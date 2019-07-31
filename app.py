@@ -19,7 +19,7 @@ ma = Marshmallow(app)
 class Donut(db.Model):
     __tablename__ = "donuts"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50))
+    title = db.Column(db.String(50), nullable = False)
     text = db.Column(db.String(255))
     image = db.Column(db.String(500))
     price = db.Column(db.Integer)
